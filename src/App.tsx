@@ -42,7 +42,7 @@ class App extends Component<{}, valueTypes> {
     return (
       <div className='App'>
         <Sitebar clickLogout={this.clearToken} />
-        <Auth />
+        <Auth updateToken={this.updateToken} />
       </div>
     )
   }

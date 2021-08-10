@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { Navbar, NavbarBrand } from 'reactstrap'
 
 type acceptedProps = {
-  clearLogout: () => void
+  clickLogout: () => void
 }
 
-export default class Sitebar extends Component<{}, acceptedProps> {
+export default class Sitebar extends Component<acceptedProps, {}> {
   constructor(props: acceptedProps) {
     super(props)
   }
