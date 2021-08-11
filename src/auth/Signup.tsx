@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import { LoginState } from './Login'
+import { AuthState } from '../types'
 
 type Props = {
   updateToken: (newToken: string) => void
 }
 
-export default class Signup extends Component<Props, LoginState> {
+export default class Signup extends Component<Props, AuthState> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -19,10 +19,9 @@ export default class Signup extends Component<Props, LoginState> {
     const target = e.target
     const value = target.value
     const name = target.name
-    //  const input = e.target.value
     this.setState({ [name]: value } as unknown as Pick<
-      LoginState,
-      keyof LoginState
+      AuthState,
+      keyof AuthState
     >)
   }
 
@@ -42,7 +41,7 @@ export default class Signup extends Component<Props, LoginState> {
     })
       .then(res => res.json())
       .then(data => {
-        this.props.updateToken(data.token)
+        this.props.updateToken(data.sessionToken)
         //   console.log(data.sessionToken)
       })
       .catch(err => console.log(err))

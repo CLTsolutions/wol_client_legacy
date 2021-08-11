@@ -12,7 +12,7 @@ import {
 import { WorkoutState } from '../types'
 
 type Props = {
-  workoutToUpdate: object
+  workoutToUpdate: any
   updateOff: () => void
   token: string
   fetchWorkouts: () => void
@@ -21,9 +21,9 @@ export default class WorkoutEdit extends Component<Props, WorkoutState> {
   constructor(props: Props) {
     super(props)
     this.state = {
-      description: '',
-      definition: '',
-      result: '',
+      description: this.props.workoutToUpdate.description,
+      definition: this.props.workoutToUpdate.definition,
+      result: this.props.workoutToUpdate.result,
     }
   }
 

@@ -9,7 +9,7 @@ import {
   NavItem,
 } from 'reactstrap'
 
-type acceptedProps = {
+type Props = {
   clickLogout: () => void
 }
 
@@ -17,8 +17,8 @@ interface NavbarState {
   isOpen: boolean
 }
 
-export default class Sitebar extends Component<acceptedProps, NavbarState> {
-  constructor(props: acceptedProps) {
+export default class Sitebar extends Component<Props, NavbarState> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       isOpen: false,

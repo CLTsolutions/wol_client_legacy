@@ -3,12 +3,12 @@ import Auth from './auth/Auth'
 import Sitebar from './home/Navbar'
 import WorkoutIndex from './workouts/WorkoutIndex'
 
-type valueTypes = {
+type AppState = {
   token: string
 }
 
-class App extends Component<{}, valueTypes> {
-  constructor(props: valueTypes) {
+class App extends Component<{}, AppState> {
+  constructor(props: {}) {
     super(props)
     this.state = {
       token: '',

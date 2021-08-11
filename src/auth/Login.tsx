@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
+import { AuthState } from '../types'
 
-type acceptedProps = {
+type Props = {
   updateToken: (newToken: string) => void
 }
 
-export interface LoginState {
-  username: string
-  password: string
-}
-
-export default class Login extends Component<acceptedProps, LoginState> {
-  constructor(props: acceptedProps) {
+export default class Login extends Component<Props, AuthState> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       username: '',
@@ -24,8 +20,8 @@ export default class Login extends Component<acceptedProps, LoginState> {
     const value = target.value
     const name = target.name
     this.setState({ [name]: value } as unknown as Pick<
-      LoginState,
-      keyof LoginState
+      AuthState,
+      keyof AuthState
     >)
   }
 

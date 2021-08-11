@@ -3,12 +3,12 @@ import { Container, Row, Col } from 'reactstrap'
 import Login from './Login'
 import Signup from './Signup'
 
-type acceptedProps = {
+type Props = {
   updateToken: (newToken: string) => void
 }
 
-export default class Auth extends Component<acceptedProps, {}> {
-  constructor(props: acceptedProps) {
+export default class Auth extends Component<Props, {}> {
+  constructor(props: Props) {
     super(props)
   }
   render() {
