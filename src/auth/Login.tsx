@@ -10,7 +10,7 @@ export interface LoginState {
   password: string
 }
 
-export class Login extends Component<acceptedProps, LoginState> {
+export default class Login extends Component<acceptedProps, LoginState> {
   constructor(props: acceptedProps) {
     super(props)
     this.state = {
@@ -19,25 +19,24 @@ export class Login extends Component<acceptedProps, LoginState> {
     }
   }
 
-  inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target
     const value = target.value
     const name = target.name
-    //  const input = e.target.value
     this.setState({ [name]: value } as unknown as Pick<
       LoginState,
       keyof LoginState
     >)
   }
 
-  handleSubmit = (e: any) => {
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     fetch('http://localhost:3000/user/login', {
       method: 'POST',
       body: JSON.stringify({
         user: {
           username: this.state.username,
-          passwordHash: this.state.password,
+          passwordhash: this.state.password,
         },
       }),
       headers: new Headers({
@@ -45,7 +44,10 @@ export class Login extends Component<acceptedProps, LoginState> {
       }),
     })
       .then(res => res.json())
-      .then(data => this.props.updateToken(data.token))
+      .then(data => {
+        this.props.updateToken(data.sessionToken)
+        //   console.log(data)
+      })
       .catch(err => console.log(err))
   }
 
@@ -57,7 +59,7 @@ export class Login extends Component<acceptedProps, LoginState> {
           <FormGroup>
             <Label htmlFor='username'>Username</Label>
             <Input
-              onChange={this.inputHandler}
+              onChange={this.handleChange}
               name='username'
               value={this.state.username}
               required
@@ -67,7 +69,7 @@ export class Login extends Component<acceptedProps, LoginState> {
           <FormGroup>
             <Label htmlFor='password'>Password</Label>
             <Input
-              onChange={this.inputHandler}
+              onChange={this.handleChange}
               name='password'
               value={this.state.password}
             />
@@ -78,5 +80,3 @@ export class Login extends Component<acceptedProps, LoginState> {
     )
   }
 }
-
-export default Login

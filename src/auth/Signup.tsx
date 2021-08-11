@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { LoginState } from './Login'
 
-type acceptedProps = {
+type Props = {
   updateToken: (newToken: string) => void
 }
 
-export class Signup extends Component<acceptedProps, LoginState> {
-  constructor(props: acceptedProps) {
+export default class Signup extends Component<Props, LoginState> {
+  constructor(props: Props) {
     super(props)
     this.state = {
       username: '',
@@ -15,7 +15,7 @@ export class Signup extends Component<acceptedProps, LoginState> {
     }
   }
 
-  inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target
     const value = target.value
     const name = target.name
@@ -33,7 +33,7 @@ export class Signup extends Component<acceptedProps, LoginState> {
       body: JSON.stringify({
         user: {
           username: this.state.username,
-          passwordHash: this.state.password,
+          passwordhash: this.state.password,
         },
       }),
       headers: new Headers({
@@ -41,7 +41,10 @@ export class Signup extends Component<acceptedProps, LoginState> {
       }),
     })
       .then(res => res.json())
-      .then(data => this.props.updateToken(data.token))
+      .then(data => {
+        this.props.updateToken(data.token)
+        //   console.log(data.sessionToken)
+      })
       .catch(err => console.log(err))
   }
 
@@ -53,7 +56,7 @@ export class Signup extends Component<acceptedProps, LoginState> {
           <FormGroup>
             <Label htmlFor='username'>Username</Label>
             <Input
-              onChange={this.inputHandler}
+              onChange={this.handleChange}
               name='username'
               value={this.state.username}
               required
@@ -63,7 +66,7 @@ export class Signup extends Component<acceptedProps, LoginState> {
           <FormGroup>
             <Label htmlFor='password'>Password</Label>
             <Input
-              onChange={this.inputHandler}
+              onChange={this.handleChange}
               name='password'
               value={this.state.password}
             />
@@ -74,5 +77,3 @@ export class Signup extends Component<acceptedProps, LoginState> {
     )
   }
 }
-
-export default Signup

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './App.css'
 import Auth from './auth/Auth'
 import Sitebar from './home/Navbar'
 
@@ -18,15 +17,17 @@ class App extends Component<{}, valueTypes> {
   componentDidMount() {
     if (localStorage.getItem('token')) {
       this.setState({
-        // ! is non-null assertion expression operator
+        // ! is a non-null assertion expression operator (TS)
         token: localStorage.getItem('token')!,
       })
     }
+    console.log(this.state.token)
   }
 
   updateToken = (newToken: string) => {
     localStorage.setItem('token', newToken)
     this.setState({ token: newToken })
+    console.log(this.state.token)
   }
 
   clearToken = () => {
