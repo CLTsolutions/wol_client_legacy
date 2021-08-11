@@ -1,11 +1,80 @@
 import React, { Component } from 'react'
+import { Button, Table } from 'reactstrap'
+// import { Workout } from '../types'
 
-export default class WorkoutTable extends Component {
+type Props = {
+  token: string
+  workouts: Array<[key: string]>
+  editUpdateWorkout: (workout: object) => void
+  updateOn: () => void
+  fetchWorkouts: () => void
+}
+export default class WorkoutTable extends Component<Props, {}> {
+  deleteWorkout = (workout: any) => {
+    fetch(`http://localhost:3000/log/${workout.id}`, {
+      method: 'DELETE',
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.props.token}`,
+      }),
+    })
+      // Refetch all workouts so only workouts which haven't been deleted are detected.
+      .then(() => this.props.fetchWorkouts())
+  }
+
+  workoutMapper = () => {
+    return this.props.workouts.map((workout: any, index) => {
+      return (
+        <tr key={index}>
+          <th scope='row'>{workout.id}</th>
+          <td>{workout.result}</td>
+          <td>{workout.description}</td>
+          <td>{workout.definition}</td>
+          <td>
+            {/* using the functions passed as props from WorkoutIndex */}
+            <Button
+              color='warning'
+              onClick={() => {
+                this.props.editUpdateWorkout(workout)
+                this.props.updateOn()
+              }}
+            >
+              Update
+            </Button>
+            {/* onClick takes a callback fn defined in our JSX.
+              - It calls deleteWorkout with a 'workout' argument, which is defined
+              -- through our .map in workoutMapper. */}
+            <Button
+              color='danger'
+              onClick={() => {
+                this.deleteWorkout(workout)
+              }}
+            >
+              Delete
+            </Button>
+          </td>
+        </tr>
+      )
+    })
+  }
+
   render() {
     return (
-      <div>
-        <h1>WOL</h1>
-      </div>
+      <>
+        <h3>Workout History</h3>
+        <hr />
+        <Table striped>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Result</th>
+              <th>Description</th>
+              <th>Definition</th>
+            </tr>
+          </thead>
+          <tbody>{this.workoutMapper()}</tbody>
+        </Table>
+      </>
     )
   }
 }

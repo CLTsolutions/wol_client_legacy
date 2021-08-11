@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Auth from './auth/Auth'
 import Sitebar from './home/Navbar'
+import WorkoutIndex from './workouts/WorkoutIndex'
 
 type valueTypes = {
   token: string
@@ -35,15 +36,19 @@ class App extends Component<{}, valueTypes> {
     this.setState({ token: '' })
   }
 
-  // const protectedViews = () => {
-  //   return (this.state.token === localStorage.getItem('token') ?)
-  // }
+  protectedViews = () => {
+    return this.state.token === localStorage.getItem('token') ? (
+      <WorkoutIndex token={this.state.token} />
+    ) : (
+      <Auth updateToken={this.updateToken} />
+    )
+  }
 
   render() {
     return (
       <div className='App'>
         <Sitebar clickLogout={this.clearToken} />
-        <Auth updateToken={this.updateToken} />
+        {this.protectedViews()}
       </div>
     )
   }

@@ -27,7 +27,7 @@ export default class WorkoutEdit extends Component<Props, WorkoutState> {
     }
   }
 
-  workoutUpdate = (e: any, workout: any) => {
+  workoutUpdate = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     fetch(`http://localhost:3000/log/${this.props.workoutToUpdate.id}`, {
       method: 'PUT',
@@ -49,27 +49,46 @@ export default class WorkoutEdit extends Component<Props, WorkoutState> {
     })
   }
 
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.target
+    const value = target.value
+    const name = target.name
+    //  const input = e.target.value
+    this.setState({ [name]: value } as unknown as Pick<
+      WorkoutState,
+      keyof WorkoutState
+    >)
+  }
+
   render() {
     return (
       <Modal isOpen={true}>
         <ModalHeader>Log a Workout</ModalHeader>
         <ModalBody>
-          <Form onSubmit={workoutUpdate}>
+          <Form onSubmit={this.workoutUpdate}>
             <FormGroup>
               <Label htmlFor='result'>Edit Result:</Label>
-              <Input name='result' value={editRes} onChange={} />
+              <Input
+                name='result'
+                value={this.state.result}
+                onChange={this.handleChange}
+              />
             </FormGroup>
             <FormGroup>
               <Label htmlFor='description'>Edit Description:</Label>
-              <Input name='description' value={editDesc} onChange={} />
+              <Input
+                name='description'
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
             </FormGroup>
             <FormGroup>
               <Label htmlFor='definition'>Edit Definition:</Label>
               <Input
                 type='select'
                 name='definition'
-                value={editDef}
-                onChange={}
+                value={this.state.definition}
+                onChange={this.handleChange}
               >
                 <option></option>
                 <option value='Time'>Time</option>
