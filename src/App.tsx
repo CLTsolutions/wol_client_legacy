@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import Auth from './auth/Auth'
 import Sitebar from './home/Navbar'
+import { Token } from './types'
 import WorkoutIndex from './workouts/WorkoutIndex'
 
 type AppState = {
-  token: string
+  token: Token
 }
 
 class App extends Component<{}, AppState> {

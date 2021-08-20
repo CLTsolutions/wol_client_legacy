@@ -9,13 +9,19 @@ import {
   ModalBody,
   ModalHeader,
 } from 'reactstrap'
-import { WorkoutState } from '../types'
+import { Token } from '../types'
 
 type Props = {
   workoutToUpdate: any
   updateOff: () => void
-  token: string
+  token: Token
   fetchWorkouts: () => void
+}
+
+interface WorkoutState {
+  definition: string
+  description: string
+  result: string
 }
 export default class WorkoutEdit extends Component<Props, WorkoutState> {
   constructor(props: Props) {

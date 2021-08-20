@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Button, Table } from 'reactstrap'
+import { Token, Workout } from '../types'
 // import { Workout } from '../types'
 
 type Props = {
-  token: string
-  workouts: Array<[key: string]>
+  token: Token
+  // workouts: Array<[key: string]>
+  workouts: Workout[]
   editUpdateWorkout: (workout: object) => void
   updateOn: () => void
   fetchWorkouts: () => void
@@ -23,7 +25,7 @@ export default class WorkoutTable extends Component<Props, {}> {
   }
 
   workoutMapper = () => {
-    return this.props.workouts.map((workout: any, index) => {
+    return this.props.workouts.map((workout, index: number) => {
       return (
         <tr key={index}>
           <th scope='row'>{workout.id}</th>

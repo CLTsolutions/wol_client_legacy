@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
-import { WorkoutState } from '../types'
+import { Token } from '../types'
 
 type Props = {
   fetchWorkouts: () => void
-  token: string
+  token: Token
 }
 
-// export interface WorkoutState {
-//   description: string
-//   definition: string
-//   result: string
-// }
+export interface WorkoutCreateState {
+  description: string
+  definition: string
+  result: string
+}
 
-export default class WorkoutCreate extends Component<Props, WorkoutState> {
+export default class WorkoutCreate extends Component<
+  Props,
+  WorkoutCreateState
+> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -56,8 +59,8 @@ export default class WorkoutCreate extends Component<Props, WorkoutState> {
     const value = target.value
     const name = target.name
     this.setState({ [name]: value } as unknown as Pick<
-      WorkoutState,
-      keyof WorkoutState
+      WorkoutCreateState,
+      keyof WorkoutCreateState
     >)
   }
 

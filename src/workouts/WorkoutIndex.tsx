@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Col, Container, Row } from 'reactstrap'
+import { Token } from '../types'
 import WorkoutCreate from './WorkoutCreate'
 import WorkoutEdit from './WorkoutEdit'
 import WorkoutTable from './WorkoutTable'
 
 type Props = {
-  token: string
+  token: Token
 }
 
 interface WorkoutIndexState {
