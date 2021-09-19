@@ -11,20 +11,14 @@ import {
 } from 'reactstrap'
 import { Token, Workout } from '../types'
 
-type Props = {
+type WorkoutEditProps = {
    workoutToUpdate: Workout
    updateOff: () => void
    token: Token
    fetchWorkouts: () => void
 }
-
-interface WorkoutState {
-   definition: string
-   description: string
-   result: string
-}
-export default class WorkoutEdit extends Component<Props, WorkoutState> {
-   constructor(props: Props) {
+export default class WorkoutEdit extends Component<WorkoutEditProps, Workout> {
+   constructor(props: WorkoutEditProps) {
       super(props)
       this.state = {
          description: this.props.workoutToUpdate.description,
@@ -59,10 +53,9 @@ export default class WorkoutEdit extends Component<Props, WorkoutState> {
       const target = e.target
       const value = target.value
       const name = target.name
-      //  const input = e.target.value
       this.setState({ [name]: value } as unknown as Pick<
-         WorkoutState,
-         keyof WorkoutState
+         Workout,
+         keyof Workout
       >)
    }
 

@@ -1,107 +1,98 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
-import { Token } from '../types'
+import { Token, Workout } from '../types'
 
 type Props = {
-  fetchWorkouts: () => void
-  token: Token
+   fetchWorkouts: () => void
+   token: Token
 }
 
-export interface WorkoutCreateState {
-  description: string
-  definition: string
-  result: string
-}
+export default class WorkoutCreate extends Component<Props, Workout> {
+   constructor(props: Props) {
+      super(props)
+      this.state = {
+         description: '',
+         definition: '',
+         result: '',
+      }
+   }
 
-export default class WorkoutCreate extends Component<
-  Props,
-  WorkoutCreateState
-> {
-  constructor(props: Props) {
-    super(props)
-    this.state = {
-      description: '',
-      definition: '',
-      result: '',
-    }
-  }
-
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault()
-    fetch('http://localhost:3000/log', {
-      method: 'POST',
-      body: JSON.stringify({
-        log: {
-          description: this.state.description,
-          definition: this.state.definition,
-          result: this.state.result,
-        },
-      }),
-      headers: new Headers({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.props.token}`,
-      }),
-    })
-      .then(res => res.json())
-      .then(logData => {
-        console.log(logData)
-        this.setState({
-          description: '',
-          definition: '',
-          result: '',
-        })
-        this.props.fetchWorkouts()
+   handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+      e.preventDefault()
+      fetch('http://localhost:3000/log', {
+         method: 'POST',
+         body: JSON.stringify({
+            log: {
+               description: this.state.description,
+               definition: this.state.definition,
+               result: this.state.result,
+            },
+         }),
+         headers: new Headers({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.props.token}`,
+         }),
       })
-  }
+         .then(res => res.json())
+         .then(logData => {
+            console.log(logData)
+            this.setState({
+               description: '',
+               definition: '',
+               result: '',
+            })
+            this.props.fetchWorkouts()
+         })
+   }
 
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target
-    const value = target.value
-    const name = target.name
-    this.setState({ [name]: value } as unknown as Pick<
-      WorkoutCreateState,
-      keyof WorkoutCreateState
-    >)
-  }
+   handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const target = e.target
+      const value = target.value
+      const name = target.name
+      this.setState({ [name]: value } as unknown as Pick<
+         Workout,
+         keyof Workout
+      >)
+   }
 
-  render() {
-    return (
-      <>
-        <h3>Log a Workout</h3>
-        {/* Calling above handleSubmit fn */}
-        <Form onSubmit={this.handleSubmit}>
-          <FormGroup>
-            <Label htmlFor='description' />
-            <Input
-              name='description'
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor='definition' />
-            <Input
-              type='select'
-              name='definition'
-              value={this.state.definition}
-              onChange={this.handleChange}
-            >
-              <option value='Time'>Time</option>
-              <option value='Weight'>Weight</option>
-              <option value='Distance'>Distance</option>
-            </Input>
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor='result' />
-            <Input
-              name='result'
-              value={this.state.result}
-              onChange={this.handleChange}
-            />
-          </FormGroup>
-          <Button type='submit'>Click to Submit</Button>
-        </Form>
-      </>
-    )
-  }
+   render() {
+      return (
+         <>
+            <h3>Log a Workout</h3>
+            {/* Calling above handleSubmit fn */}
+            <Form onSubmit={this.handleSubmit}>
+               <FormGroup>
+                  <Label htmlFor='description' />
+                  <Input
+                     name='description'
+                     value={this.state.description}
+                     onChange={this.handleChange}
+                  />
+               </FormGroup>
+               <FormGroup>
+                  <Label htmlFor='definition' />
+                  <Input
+                     type='select'
+                     name='definition'
+                     value={this.state.definition}
+                     onChange={this.handleChange}
+                  >
+                     <option value='Time'>Time</option>
+                     <option value='Weight'>Weight</option>
+                     <option value='Distance'>Distance</option>
+                  </Input>
+               </FormGroup>
+               <FormGroup>
+                  <Label htmlFor='result' />
+                  <Input
+                     name='result'
+                     value={this.state.result}
+                     onChange={this.handleChange}
+                  />
+               </FormGroup>
+               <Button type='submit'>Click to Submit</Button>
+            </Form>
+         </>
+      )
+   }
 }

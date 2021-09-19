@@ -10,7 +10,7 @@ type Props = {
 }
 
 interface WorkoutIndexState {
-   workouts: []
+   workouts: Workout[]
    updateActive: boolean
    workoutToUpdate: Workout | null
 }
@@ -53,7 +53,7 @@ export default class WorkoutIndex extends Component<Props, WorkoutIndexState> {
       this.setState({ updateActive: false })
    }
 
-   componentDidMount = () => {
+   componentDidMount = (): void => {
       this.fetchWorkouts()
    }
 

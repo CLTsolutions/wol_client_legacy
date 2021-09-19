@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Container, Row, Col } from 'reactstrap'
+import { Token } from '../types'
 import Login from './Login'
 import Signup from './Signup'
 
 type AuthProps = {
-   updateToken: (newToken: string) => void
+   updateToken: (newToken: Token) => void
 }
+
 type AuthCompState = {}
 
 export default class Auth extends Component<AuthProps, AuthCompState> {

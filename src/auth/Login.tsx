@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap'
-import { AuthState } from '../types'
+import { AuthState, Token } from '../types'
 
 type Props = {
-   updateToken: (newToken: string) => void
+   updateToken: (newToken: Token) => void
 }
 
 export default class Login extends Component<Props, AuthState> {

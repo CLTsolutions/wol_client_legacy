@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import { AuthState } from '../types'
+import { AuthState, Token } from '../types'
 
-type Props = {
-   updateToken: (newToken: string) => void
+type AuthProps = {
+   updateToken: (newToken: Token) => void
 }
 
-export default class Signup extends Component<Props, AuthState> {
-   constructor(props: Props) {
+export default class Signup extends Component<AuthProps, AuthState> {
+   constructor(props: AuthProps) {
       super(props)
       this.state = {
          username: '',
@@ -42,7 +42,6 @@ export default class Signup extends Component<Props, AuthState> {
          .then(res => res.json())
          .then(data => {
             this.props.updateToken(data.sessionToken)
-            //   console.log(data.sessionToken)
          })
          .catch(err => console.log(err))
    }

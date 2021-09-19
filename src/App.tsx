@@ -4,19 +4,20 @@ import Sitebar from './home/Navbar'
 import { Token } from './types'
 import WorkoutIndex from './workouts/WorkoutIndex'
 
+type AppProps = {}
 type AppState = {
    token: Token
 }
 
-class App extends Component<{}, AppState> {
-   constructor(props: {}) {
+class App extends Component<AppProps, AppState> {
+   constructor(props: AppProps) {
       super(props)
       this.state = {
          token: '',
       }
    }
 
-   componentDidMount() {
+   componentDidMount(): void {
       if (localStorage.getItem('token')) {
          this.setState({
             // ! is a non-null assertion expression operator (TS)
@@ -32,12 +33,12 @@ class App extends Component<{}, AppState> {
       console.log(this.state.token)
    }
 
-   clearToken = () => {
+   clearToken = (): void => {
       localStorage.clear()
       this.setState({ token: '' })
    }
 
-   protectedViews = () => {
+   protectedViews = (): JSX.Element => {
       return this.state.token === localStorage.getItem('token') ? (
          <WorkoutIndex token={this.state.token} />
       ) : (
